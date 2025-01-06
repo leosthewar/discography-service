@@ -116,16 +116,18 @@ class DiscogsAPIOkHttpClientTest {
     void testConstructor_NullBaseUrl() {
         setUp();
         // Validate the constructor throws an exception when the base URL is null
+        OkHttpClient client = new OkHttpClient();
         IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class, () -> {
-            new DiscogsAPIOkHttpClient(
-                    new OkHttpClient(),
-                    objectMapper,
-                    consumerKey,
-                    consumerSecret,
-                    null
-            );
-        });
+                IllegalArgumentException.class,
+                () -> new DiscogsAPIOkHttpClient(
+                        client,
+                        objectMapper,
+                        consumerKey,
+                        consumerSecret,
+                        null
+                )
+        );
+
 
         assertEquals("Base URL cannot be null", exception.getMessage());
         shutdownMockWebServer();
@@ -134,10 +136,11 @@ class DiscogsAPIOkHttpClientTest {
     @Test
     void testConstructor_InvalidBaseUrl() {
         // Validate the constructor throws an exception when the base URL is null
+        OkHttpClient client = new OkHttpClient();
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
                     new DiscogsAPIOkHttpClient(
-                            new OkHttpClient(),
+                            client,
                             objectMapper,
                             consumerKey,
                             consumerSecret,
@@ -152,10 +155,11 @@ class DiscogsAPIOkHttpClientTest {
     void testConstructor_BlankConsumerKey() {
         setUp();
         // Validate the constructor throws an exception when the consumer key is blank
+        OkHttpClient client = new OkHttpClient();
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> new DiscogsAPIOkHttpClient(
-                        new OkHttpClient(),
+                        client,
                         objectMapper,
                         "",
                         consumerSecret,
@@ -171,10 +175,11 @@ class DiscogsAPIOkHttpClientTest {
     void testConstructor_BlankConsumerSecret() {
         setUp();
         // Validate the constructor throws an exception when the consumer secret is blank
+        OkHttpClient client = new OkHttpClient();
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class, () -> {
                     new DiscogsAPIOkHttpClient(
-                            new OkHttpClient(),
+                            client,
                             objectMapper,
                             consumerKey,
                             null,
