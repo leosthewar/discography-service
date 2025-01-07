@@ -1,7 +1,7 @@
 package com.clara.discographyservice.adapter.in.rest;
 
 import com.clara.discographyservice.application.port.in.ArtistSearchQuery;
-import com.clara.discographyservice.application.port.in.SearchArtistDiscogsUseCase;
+import com.clara.discographyservice.application.port.in.SearchArtistFromDiscogsUseCase;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping("v1/discogs/artists")
+@RequestMapping("v1/discogs")
 @ApiResponses(value = {
         @ApiResponse(responseCode = "500", description = "Unexpected error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))),
         @ApiResponse(responseCode = "502", description = "Discogs API returns error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))),
@@ -24,9 +24,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 })
 public class DiscogsRestController {
 
-    private final SearchArtistDiscogsUseCase searchArtistDiscogsUseCase;
+    private final SearchArtistFromDiscogsUseCase searchArtistDiscogsUseCase;
 
-    public DiscogsRestController(SearchArtistDiscogsUseCase searchArtistDiscogsUseCase) {
+    public DiscogsRestController(SearchArtistFromDiscogsUseCase searchArtistDiscogsUseCase) {
         this.searchArtistDiscogsUseCase = searchArtistDiscogsUseCase;
     }
 
@@ -36,7 +36,7 @@ public class DiscogsRestController {
                     """))),
     })
     @Operation(summary = "Search artists using Discogs API")
-    @GetMapping("/search")
+    @GetMapping("/artists/search")
     public ResponseEntity<JsonNode> searchArtist(@RequestParam(value = "q")  String query,
                                           @RequestParam(value = "page",required = false)  Integer page,
                                           @RequestParam(value = "per_page",required = false) Integer perPage){

@@ -4,6 +4,7 @@ import com.clara.discographyservice.application.port.out.DiscogsException;
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -36,6 +37,19 @@ public class RestExceptionAdvise {
                                                          .message("Bad request")
                                                          .code(HttpStatus.BAD_REQUEST.value())
                                                          .details(e.getMessage())
+                                                         .timestamp(java.time.LocalDateTime.now())
+                                                         .build();
+        logger.error("Bad request. exception: {}", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                             .body(errorResponse);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponseDTO> handleDataIntegrityViolation(DataIntegrityViolationException e) {
+        ErrorResponseDTO errorResponse = ErrorResponseDTO.builder()
+                                                         .message("Bad request")
+                                                         .code(HttpStatus.BAD_REQUEST.value())
+                                                         .details(e.getMostSpecificCause().getMessage())
                                                          .timestamp(java.time.LocalDateTime.now())
                                                          .build();
         logger.error("Bad request. exception: {}", e.getMessage());

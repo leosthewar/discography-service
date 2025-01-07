@@ -3,7 +3,9 @@ package com.clara.discographyservice.application.port.in;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ArtistSearchQueryTest {
 

@@ -1,7 +1,7 @@
-package com.clara.discographyservice.application.domain.service.discogs;
+package com.clara.discographyservice.application.domain.service;
 
 import com.clara.discographyservice.application.port.in.ArtistSearchQuery;
-import com.clara.discographyservice.application.port.in.SearchArtistDiscogsUseCase;
+import com.clara.discographyservice.application.port.in.SearchArtistFromDiscogsUseCase;
 import com.clara.discographyservice.application.port.out.DiscogsAPIClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -11,20 +11,20 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class SearchArtistDiscogsService implements SearchArtistDiscogsUseCase {
+public class SearchArtistFromDiscogsService implements SearchArtistFromDiscogsUseCase {
 
-    private static final Logger logger = LoggerFactory.getLogger(SearchArtistDiscogsService.class);
+    private static final Logger logger = LoggerFactory.getLogger(SearchArtistFromDiscogsService.class);
     private final DiscogsAPIClient discogsAPIClient;
 
 
-    public SearchArtistDiscogsService(DiscogsAPIClient discogsAPIClient) {
+    public SearchArtistFromDiscogsService(DiscogsAPIClient discogsAPIClient) {
         this.discogsAPIClient = discogsAPIClient;
     }
 
     /**
      * Searches for an artist using the Discogs API.
      *
-     * @see SearchArtistDiscogsUseCase#searchArtist
+     * @see SearchArtistFromDiscogsUseCase#searchArtist
      */
     @Override
     public JsonNode searchArtist(ArtistSearchQuery artistSearchQuery) {

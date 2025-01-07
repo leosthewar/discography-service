@@ -1,4 +1,4 @@
-package com.clara.discographyservice.application.domain.service.discogs;
+package com.clara.discographyservice.application.domain.service;
 
 import com.clara.discographyservice.application.port.in.ArtistSearchQuery;
 import com.clara.discographyservice.application.port.out.DiscogsAPIClient;
@@ -9,17 +9,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.when;
 
-class SearchArtistDiscogsServiceTest {
+class SearchArtistFromDiscogsServiceTest {
 
     private final DiscogsAPIClient discogsAPIClient = Mockito.mock(DiscogsAPIClient.class);
 
-    private final SearchArtistDiscogsService searchArtistDiscogsService = new SearchArtistDiscogsService(discogsAPIClient);
+    private final SearchArtistFromDiscogsService searchArtistFromDiscogsService = new SearchArtistFromDiscogsService(discogsAPIClient);
 
 
 
@@ -35,7 +38,7 @@ class SearchArtistDiscogsServiceTest {
         when(discogsAPIClient.searchArtist(any())).thenReturn(jsonNode);
 
         // When - Call the searchArtist method
-        JsonNode result = searchArtistDiscogsService.searchArtist(artistSearchQuery);
+        JsonNode result = searchArtistFromDiscogsService.searchArtist(artistSearchQuery);
 
         // Then - Verify that the result is correct
         // Assert that the result is present
@@ -77,7 +80,7 @@ class SearchArtistDiscogsServiceTest {
         when(discogsAPIClient.searchArtist(any())).thenReturn(jsonNode);
 
         // When - Call the searchArtist method
-        JsonNode result = searchArtistDiscogsService.searchArtist(artistSearchQuery);
+        JsonNode result = searchArtistFromDiscogsService.searchArtist(artistSearchQuery);
         // Then - Verify that the result is correct
         // Assert that the result is present
         assertNotNull(result);

@@ -4,7 +4,7 @@ import com.clara.discographyservice.application.port.out.DiscogsException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 
-public interface SearchArtistDiscogsUseCase {
+public interface SearchArtistFromDiscogsUseCase {
     /**
      * Searches for an artist using the Discogs API.
      *
