@@ -1,4 +1,4 @@
-package com.clara.discographyservice.adapter.out.jpa.entity;
+package com.clara.discographyservice.application.domain.model.artist;
 
 
 import jakarta.persistence.CascadeType;
@@ -57,18 +57,45 @@ public class ArtistEntity {
     @Column(name = "data_quality")
     private String dataQuality;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "artist_id",nullable = false)
-    private List<ArtistImageEntity> images;
-
     @Column(name = "urls")
     @JdbcTypeCode(SqlTypes.ARRAY)
     private Set<String> urls;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(name = "discography_imported")
+    private Boolean discographyImported;
+
+    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @JoinColumn(name = "artist_id",nullable = false)
+    private List<ArtistImageEntity> images;
+
+    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JoinColumn(name = "artist_id",nullable = false)
     private List<ArtistMemberEntity> members;
 
 
+
+    public ArtistEntity(Long discogsId, String name, String discogsResourceUrl,
+                        String discogsUri, String discogsReleasesUrl,
+                        String profile, Set<String> nameVariations, String dataQuality,
+                        Set<String> urls,
+                        List<ArtistImageEntity> images,
+                        List<ArtistMemberEntity> members) {
+        this.discogsId = discogsId;
+        this.name = name;
+        this.discogsResourceUrl = discogsResourceUrl;
+        this.discogsUri = discogsUri;
+        this.discogsReleasesUrl = discogsReleasesUrl;
+        this.profile = profile;
+        this.nameVariations = nameVariations;
+        this.dataQuality = dataQuality;
+        this.urls = urls;
+        this.discographyImported = false;
+        this.images = images;
+        this.members = members;
+    }
+
+    public void setDiscographyImported(Boolean discographyImported) {
+        this.discographyImported = discographyImported;
+    }
 }
 

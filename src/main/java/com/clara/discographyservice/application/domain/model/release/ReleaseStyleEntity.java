@@ -1,7 +1,5 @@
-package com.clara.discographyservice.adapter.out.jpa.entity;
+package com.clara.discographyservice.application.domain.model.release;
 
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,24 +16,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "artist_member")
-public class ArtistMemberEntity {
+@Table(name = "release_style")
+public class ReleaseStyleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "discogs_artist_id", nullable = false)
-    private Long discogsArtistId;
-
     private String name;
 
-    @Column(name = "discogs_resource_url")
-    private String discogsResourceUrl;
-
-    private Boolean active;
-
-    @Column(name = "thumbnail_url")
-    private String thumbnailUrl;
-
+    public ReleaseStyleEntity(String name) {
+        this.name = name;
+    }
 }

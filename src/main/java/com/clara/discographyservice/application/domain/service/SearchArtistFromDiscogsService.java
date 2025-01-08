@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class SearchArtistFromDiscogsService implements SearchArtistFromDiscogsUseCase {
+class SearchArtistFromDiscogsService implements SearchArtistFromDiscogsUseCase {
 
     private static final Logger logger = LoggerFactory.getLogger(SearchArtistFromDiscogsService.class);
     private final DiscogsAPIClient discogsAPIClient;

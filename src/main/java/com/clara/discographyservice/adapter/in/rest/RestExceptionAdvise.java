@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class RestExceptionAdvise {
+class RestExceptionAdvise {
 
     private static final Logger logger = LoggerFactory.getLogger(RestExceptionAdvise.class);
 

@@ -1,6 +1,6 @@
 package com.clara.discographyservice.adapter.in.rest;
 
-import com.clara.discographyservice.application.domain.model.Artist;
+import com.clara.discographyservice.application.domain.model.artist.responsemodel.ArtistResModel;
 import com.clara.discographyservice.application.port.in.ArtistImportCommand;
 import com.clara.discographyservice.application.port.in.ImportArtistResponse;
 import com.clara.discographyservice.application.port.in.ImportArtistUseCase;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.Optional;
 
 
@@ -24,7 +25,7 @@ import java.util.Optional;
         @ApiResponse(responseCode = "502", description = "Discogs API returns error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))),
         @ApiResponse(responseCode = "404", description = "Artist not found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class)))
 })
-public class ArtistRestController {
+class ArtistRestController {
 
     private final ImportArtistUseCase importArtistUseCase;
 
@@ -36,8 +37,8 @@ public class ArtistRestController {
     @Operation(summary = "Import artist's data from  Discogs API")
     @PostMapping("/import/discogs/{discogsArtistId}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Artist already imported", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Artist.class))),
-            @ApiResponse(responseCode = "201", description = "Artist imported successfully from Discogs", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Artist.class))),
+            @ApiResponse(responseCode = "200", description = "Artist already imported", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ArtistResModel.class))),
+            @ApiResponse(responseCode = "201", description = "Artist imported successfully from Discogs", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ArtistResModel.class))),
     })
     public ResponseEntity<Object> searchArtist(@PathVariable(value = "discogsArtistId") Long discogsArtistId) {
         Optional<ImportArtistResponse> response = importArtistUseCase.importArtist(new ArtistImportCommand(discogsArtistId));

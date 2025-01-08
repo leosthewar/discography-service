@@ -1,6 +1,7 @@
 package com.clara.discographyservice.application.domain.service;
 
-import com.clara.discographyservice.application.domain.model.Artist;
+import com.clara.discographyservice.application.domain.model.artist.ArtistEntity;
+import com.clara.discographyservice.application.domain.model.artist.ArtistEntityMapper;
 import com.clara.discographyservice.application.port.in.ArtistGetQuery;
 import com.clara.discographyservice.application.port.in.ArtistImportCommand;
 import com.clara.discographyservice.application.port.in.DeserializerDiscogsResponseException;
@@ -19,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-public class ImportArtistService implements ImportArtistUseCase {
+class ImportArtistService implements ImportArtistUseCase {
 
     private static final Logger logger = LoggerFactory.getLogger(ImportArtistService.class);
 
@@ -38,7 +39,7 @@ public class ImportArtistService implements ImportArtistUseCase {
     @Transactional
     public Optional<ImportArtistResponse> importArtist(ArtistImportCommand importCommand) {
         // Validate if artist already exists in the database
-        Optional<Artist> optionalArtist = artistRepository.findByDiscogsArtistId(importCommand.discogsArtistId());
+        Optional<ArtistEntity> optionalArtist = artistRepository.findByDiscogsArtistId(importCommand.discogsArtistId());
         if (optionalArtist.isEmpty()) {
             // Artist does not exist in the database, Get artist from Discogs
             Optional<JsonNode> optionalJsonNode = discogsAPIClient.getArtist(new ArtistGetQuery(importCommand.discogsArtistId()));
@@ -46,18 +47,18 @@ public class ImportArtistService implements ImportArtistUseCase {
             return optionalJsonNode.map(jsonNode -> {
                 try {
                     // Deserialize the JsonNode into an Artist object
-                    Artist artist = objectMapper.treeToValue(jsonNode, Artist.class);
+                    ArtistEntity artist = objectMapper.treeToValue(jsonNode, ArtistEntity.class);
                     // Save the artist to the database
                     artist = artistRepository.save(artist);
                     logger.info("Artist imported: {}", artist.getName());
-                    return Optional.of(new ImportArtistResponse(artist, true));
+                    return Optional.of(new ImportArtistResponse(ArtistEntityMapper.toReponseModel(artist), true));
                 } catch (JsonProcessingException e) {
                     throw new DeserializerDiscogsResponseException("Error deserializing Discogs response", e);
                 }
             }).orElse(Optional.empty());  // Return empty Optional if artist not found in Discogs
         }
         // Artist already exists in the database, return imported=false
-        return Optional.of(new ImportArtistResponse(optionalArtist.get(), false));
+        return Optional.of(new ImportArtistResponse(ArtistEntityMapper.toReponseModel(optionalArtist.get()), false));
 
     }
 }

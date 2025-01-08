@@ -1,7 +1,9 @@
 package com.clara.discographyservice.infrastructure.config;
 
-import com.clara.discographyservice.application.domain.model.Artist;
-import com.clara.discographyservice.application.domain.model.ArtistDeserializer;
+import com.clara.discographyservice.application.domain.model.artist.ArtistDeserializer;
+import com.clara.discographyservice.application.domain.model.artist.ArtistEntity;
+import com.clara.discographyservice.application.domain.model.release.ReleaseDeserializer;
+import com.clara.discographyservice.application.domain.model.release.ReleaseEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -18,7 +20,8 @@ public class ObjectMapperConfig {
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
-        module.addDeserializer(Artist.class, new ArtistDeserializer());
+        module.addDeserializer(ArtistEntity.class, new ArtistDeserializer());
+        module.addDeserializer(ReleaseEntity.class, new ReleaseDeserializer());
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.registerModule(module);

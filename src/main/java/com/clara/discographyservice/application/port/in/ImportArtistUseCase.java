@@ -4,6 +4,6 @@ import java.util.Optional;
 
 public interface ImportArtistUseCase {
 
-    Optional<ImportArtistResponse> importArtist(ArtistImportCommand saveCommand);
+    Optional<ImportArtistResponse> importArtist(ArtistImportCommand importCommand);
 
 }

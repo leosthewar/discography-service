@@ -22,7 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
         @ApiResponse(responseCode = "502", description = "Discogs API returns error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class)))
 })
-public class DiscogsRestController {
+class DiscogsRestController {
 
     private final SearchArtistFromDiscogsUseCase searchArtistDiscogsUseCase;
 

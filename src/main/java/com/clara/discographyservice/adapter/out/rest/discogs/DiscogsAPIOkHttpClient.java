@@ -1,7 +1,9 @@
 package com.clara.discographyservice.adapter.out.rest.discogs;
 
 import com.clara.discographyservice.application.port.in.ArtistGetQuery;
+import com.clara.discographyservice.application.port.in.ArtistReleasesGetQuery;
 import com.clara.discographyservice.application.port.in.ArtistSearchQuery;
+import com.clara.discographyservice.application.port.in.ReleaseGetQuery;
 import com.clara.discographyservice.application.port.out.DiscogsAPIClient;
 import com.clara.discographyservice.application.port.out.DiscogsException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -26,6 +28,8 @@ public class DiscogsAPIOkHttpClient implements DiscogsAPIClient {
     private static final Logger logger = LoggerFactory.getLogger(DiscogsAPIOkHttpClient.class);
     private static final  String SEARCH_RESOURCE = "/database/search";
     private static final  String ARTISTS_RESOURCE = "/artists";
+    private static final  String ARTISTS_RELEASES_RESOURCE = "/artists/%s/releases";
+    private static final  String RELEASE_RESOURCE = "/releases";
 
 
     private final String baseUrl;
@@ -81,7 +85,7 @@ public class DiscogsAPIOkHttpClient implements DiscogsAPIClient {
                                                                            .toString())
                                  .build();
 
-            request = buildRequest(url,true);
+            request = buildRequest(url);
         } catch (Exception e) {
             throw new IllegalArgumentException("Unexpected error creating Discogs request: " + e.getMessage(), e);
         }
@@ -106,11 +110,11 @@ public class DiscogsAPIOkHttpClient implements DiscogsAPIClient {
         try {
             HttpUrl url = HttpUrl.parse(baseUrl + ARTISTS_RESOURCE)
                                  .newBuilder()
-                                 .addEncodedPathSegment(artistGetQuery.artistId()
+                                 .addPathSegment(artistGetQuery.artistId()
                                                                       .toString())
                                  .build();
 
-            request = buildRequest(url,true);
+            request = buildRequest(url);
         } catch (Exception e) {
             throw new IllegalArgumentException("Unexpected error creating Discogs request: " + e.getMessage(), e);
         }
@@ -125,7 +129,7 @@ public class DiscogsAPIOkHttpClient implements DiscogsAPIClient {
             if(response.isSuccessful()){
 
                 String responseBody = response.body().string();
-                logger.info("Response: {}", responseBody);
+                logger.debug("getArtist Response: {}", responseBody);
                 return Optional.of(objectMapper.readTree(responseBody));
             }else{
                 throw new DiscogsException(String.format("Discogs API error: HTTP %d, message: %s", response.code(), response.message()));
@@ -136,17 +140,85 @@ public class DiscogsAPIOkHttpClient implements DiscogsAPIClient {
         }
     }
 
-    private Request buildRequest(HttpUrl url, boolean requiresAuth) {
-        Request.Builder rBuilder = new  Request.Builder();
-        if (requiresAuth) {
-            rBuilder.addHeader("Authorization", String.format("Discogs key=%s, secret=%s", consumerKey, consumerSecret));
+
+    @Override
+    public Optional<JsonNode> getArtistReleases(ArtistReleasesGetQuery artistReleasesGetQuery) {
+        Request request;
+        try {
+            HttpUrl url = HttpUrl.parse(baseUrl + String.format(ARTISTS_RELEASES_RESOURCE, artistReleasesGetQuery.artistId()))
+                                 .newBuilder()
+                                 .addQueryParameter("page", artistReleasesGetQuery.page().toString())
+                                 .addQueryParameter("per_page", artistReleasesGetQuery.perPage().toString())
+                                 .build();
+
+            request = buildRequest(url);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Unexpected error creating Discogs request: " + e.getMessage(), e);
         }
-        return rBuilder
+
+        try (Response response = client.newCall(request)
+                                       .execute()) {
+
+            if (response.code() == HttpStatus.NOT_FOUND.value()) {
+                return Optional.empty();
+            }
+
+            if(response.isSuccessful()){
+
+                String responseBody = response.body().string();
+                logger.debug("getArtistReleases Response: {}", responseBody);
+                return Optional.of(objectMapper.readTree(responseBody));
+            }else{
+                throw new DiscogsException(String.format("Discogs API error: HTTP %d, message: %s", response.code(), response.message()));
+            }
+
+        } catch (IOException e) {
+            throw new DiscogsException("Discogs API error, unexpected ex: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Optional<JsonNode> getRelease(ReleaseGetQuery releaseGetQuery) {
+        Request request;
+        try {
+            HttpUrl url = HttpUrl.parse(baseUrl + RELEASE_RESOURCE)
+                                 .newBuilder()
+                                 .addPathSegment(releaseGetQuery.releaseId().toString())
+                                 .build();
+
+            request = buildRequest(url);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Unexpected error creating Discogs request: " + e.getMessage(), e);
+        }
+
+        try (Response response = client.newCall(request)
+                                       .execute()) {
+
+            if (response.code() == HttpStatus.NOT_FOUND.value()) {
+                return Optional.empty();
+            }
+
+            if(response.isSuccessful()){
+
+                String responseBody = response.body().string();
+                logger.debug("getArtistReleases Response: {}", responseBody);
+                return Optional.of(objectMapper.readTree(responseBody));
+            }else{
+                throw new DiscogsException(String.format("Discogs API error: HTTP %d, message: %s", response.code(), response.message()));
+            }
+
+        } catch (IOException e) {
+            throw new DiscogsException("Discogs API error, unexpected ex: " + e.getMessage(), e);
+        }
+    }
+
+    private Request buildRequest(HttpUrl url) {
+        return new  Request.Builder()
+                .addHeader("Authorization", String.format("Discogs key=%s, secret=%s", consumerKey, consumerSecret))
                 .addHeader("User-Agent", "clara-discography-service")
                 .url(url)
                 .get()
                 .build();
-
     }
 
 

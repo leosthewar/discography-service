@@ -1,15 +1,13 @@
 package com.clara.discographyservice.adapter.out.jpa.repository;
 
-import com.clara.discographyservice.adapter.out.jpa.entity.ArtistEntity;
-import com.clara.discographyservice.adapter.out.jpa.entity.ArtistEntityMapper;
-import com.clara.discographyservice.application.domain.model.Artist;
+import com.clara.discographyservice.application.domain.model.artist.ArtistEntity;
 import com.clara.discographyservice.application.port.out.ArtistRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public class ArtistJpaAdapter implements ArtistRepository {
+class ArtistJpaAdapter implements ArtistRepository {
 
     private final ArtistJpaRepository artistJpaRepository;
 
@@ -18,13 +16,17 @@ public class ArtistJpaAdapter implements ArtistRepository {
     }
 
     @Override
-    public Artist save(Artist artist) {
-        ArtistEntity artistEntity = ArtistEntityMapper.toEntity(artist);
-       return  ArtistEntityMapper.toDomain(artistJpaRepository.save(artistEntity));
+    public ArtistEntity save(ArtistEntity artist) {
+       return  artistJpaRepository.save(artist);
     }
 
     @Override
-    public Optional<Artist> findByDiscogsArtistId(Long discogsArtistId) {
-        return artistJpaRepository.findByDiscogsId(discogsArtistId).map(ArtistEntityMapper::toDomain);
+    public Optional<ArtistEntity> findById(Long id) {
+        return artistJpaRepository.findById(id);
+    }
+
+    @Override
+    public Optional<ArtistEntity> findByDiscogsArtistId(Long discogsArtistId) {
+        return artistJpaRepository.findByDiscogsId(discogsArtistId);
     }
 }
