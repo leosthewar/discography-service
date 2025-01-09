@@ -34,7 +34,7 @@ For the database, the service uses Flyway to manage migrations.
 - Artist and Discography Retrieval: The service retrieves the artist and discography information  of the selected artist from the Discogs API and stores it in a database.
 The service imports the discography data from the Discogs API into the database, using a sequence of both synchronous and asynchronous process.
 - Artist's Discography: The user can retrieve the discography of an artist from the database sort by year or by title.
-- Artist Comparison:
+- Artist Comparison: The user can compare the discographies of 2 to 5 artists from the database.
 
 ### Main architecture and design principles applied:
 - Hexagonal architecture (ports and adapters)
@@ -152,7 +152,7 @@ the solution focuses on the primary requirements, leaving some tasks pending for
 This file contains the configuration of the service such as the database configuration, and consumerKey and consumerSecret for the Discogs API.
 For practical reasons, these configurations are included in a properties file. 
 In a real environment, it is recommended to use key variables or environment variables to store these configurations outer the git repository.
-
+Consider enable logging at DEBUG level to see more details in the properties file.
 
 ## Running the service using maven
 If you want to run the service using maven, you need to have a postgres database running.
