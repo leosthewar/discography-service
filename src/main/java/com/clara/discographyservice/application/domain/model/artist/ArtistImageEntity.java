@@ -23,20 +23,25 @@ public class ArtistImageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "type", length = 50)
     private String type;
 
-    @Column(name = "discogs_uri")
+    @Column(name = "discogs_uri", length = 1024)
     private String discogsUri;
 
-    @Column(name = "discogs_resource_url")
+    @Column(name = "discogs_resource_url", length = 1024)
     private String discogsResourceUrl;
 
-    @Column(name = "discogs_uri150")
+    @Column(name = "discogs_uri150", length = 1024)
     private String discogsUri150;
 
     private Integer width;
     private Integer height;
 
+    /**
+     * Constructor to create an ArtistImageEntity with null id,
+     * to use just to create an ArtistMemberEntity before save in persistence
+     */
     public ArtistImageEntity(String type, String discogsUri, String discogsResourceUrl, String discogsUri150, Integer width, Integer height) {
         this.type = type;
         this.discogsUri = discogsUri;

@@ -27,6 +27,10 @@ public class ReleaseFormatEntity {
 
     private String qty;
 
+    /**
+     * Constructor to create a ReleaseFormatEntity with null id,
+     * to use just to create a ReleaseFormatEntity before save in persistence
+     */
     public ReleaseFormatEntity(String name, String qty) {
         this.name = name;
         this.qty = qty;

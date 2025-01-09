@@ -4,6 +4,8 @@ package com.clara.discographyservice.application.domain.model.discographyimport;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,6 +38,8 @@ public class ArtistDiscographyImportEntity {
     @Column(name = "discogs_artist_id", nullable = false)
     private Long discogsArtistId;
 
+    @Enumerated(EnumType.STRING) // Store as a string in the database
+    @Column(nullable = false)
     private ArtistDiscographyImportStatusEnum status;
 
     @Column(name = "created_at")
@@ -52,7 +56,10 @@ public class ArtistDiscographyImportEntity {
     private List<ArtistDiscographyImportDetailEntity> details;
 
 
-
+    /**
+     * Constructor to create an ArtistDiscographyImportEntity with null id,
+     * to use just to create an ArtistDiscographyImportEntity before save in persistence
+     */
     public ArtistDiscographyImportEntity(Long artistId, Long discogsArtistId, ArtistDiscographyImportStatusEnum status, LocalDateTime createdAt, LocalDateTime finishedAt, Integer releasesTotal, List<ArtistDiscographyImportDetailEntity> details) {
         this.artistId = artistId;
         this.discogsArtistId = discogsArtistId;

@@ -1,5 +1,6 @@
 package com.clara.discographyservice.application.port.in;
 
+import com.clara.discographyservice.application.port.in.model.ArtistSearchQuery;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 

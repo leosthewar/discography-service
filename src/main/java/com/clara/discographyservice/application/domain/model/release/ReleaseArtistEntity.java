@@ -37,12 +37,16 @@ public class ReleaseArtistEntity {
 
     private String tracks;
 
-    @Column(name = "discogs_resource_url")
+    @Column(name = "discogs_resource_url", length = 1024)
     private String discogsResourceUrl;
 
-    @Column(name = "discogs_thumbnail_url")
+    @Column(name = "discogs_thumbnail_url", length = 1024)
     private String discogsThumbnailUrl;
 
+    /**
+     * Constructor to create a ReleaseArtistEntity with null id,
+     * to use just to create a ReleaseArtistEntity before save in persistence
+     */
     public ReleaseArtistEntity(Long discogsArtistId, String name, String anv,
                                String ajoin, String role, String tracks,
                                String discogsResourceUrl, String discogsThumbnailUrl) {

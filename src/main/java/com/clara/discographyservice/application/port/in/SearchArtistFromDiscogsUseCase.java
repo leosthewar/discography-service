@@ -1,5 +1,6 @@
 package com.clara.discographyservice.application.port.in;
 
+import com.clara.discographyservice.application.port.in.model.ArtistSearchQuery;
 import com.clara.discographyservice.application.port.out.DiscogsException;
 import com.fasterxml.jackson.databind.JsonNode;
 

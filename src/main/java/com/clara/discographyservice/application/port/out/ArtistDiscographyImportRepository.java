@@ -20,6 +20,8 @@ public interface ArtistDiscographyImportRepository {
 
     void  setImportDetailTrue(Long detailId);
 
+    void deleteImportDetail(Long detailId);
+
     Integer countReleasesNotImportedByArtistId(Long importId);
 
 }

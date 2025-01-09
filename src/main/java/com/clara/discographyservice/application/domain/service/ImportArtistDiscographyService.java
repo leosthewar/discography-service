@@ -6,11 +6,11 @@ import com.clara.discographyservice.application.domain.model.discographyimport.A
 import com.clara.discographyservice.application.domain.model.discographyimport.ArtistDiscographyImportMapper;
 import com.clara.discographyservice.application.domain.model.discographyimport.ArtistDiscographyImportResModel;
 import com.clara.discographyservice.application.domain.model.discographyimport.ArtistDiscographyImportStatusEnum;
-import com.clara.discographyservice.application.port.in.ArtistDiscographyImportCommand;
-import com.clara.discographyservice.application.port.in.ArtistReleasesGetQuery;
-import com.clara.discographyservice.application.port.in.ImportArtistDiscographyResponse;
 import com.clara.discographyservice.application.port.in.ImportArtistDiscographyUseCase;
-import com.clara.discographyservice.application.port.in.ValidatePendingImportsCommand;
+import com.clara.discographyservice.application.port.in.model.ArtistDiscographyImportCommand;
+import com.clara.discographyservice.application.port.in.model.ArtistReleasesGetQuery;
+import com.clara.discographyservice.application.port.in.model.ImportArtistDiscographyResponse;
+import com.clara.discographyservice.application.port.in.model.ValidatePendingImportsCommand;
 import com.clara.discographyservice.application.port.out.ArtistDiscographyImportRepository;
 import com.clara.discographyservice.application.port.out.ArtistRepository;
 import com.clara.discographyservice.application.port.out.DiscogsAPIClient;
@@ -92,7 +92,7 @@ class ImportArtistDiscographyService implements ImportArtistDiscographyUseCase {
 
         artistDiscographyImportEntity = artistDiscographyImportRepository.save(artistDiscographyImportEntity);
         ArtistDiscographyImportResModel artistDiscographyImport = ArtistDiscographyImportMapper.toResponseModel(artistDiscographyImportEntity);
-        logger.debug("Artist's discography importation has been created: {}", artistDiscographyImport.getId());
+        logger.debug("Artist's discography importation has been created: {}", artistDiscographyImport.id());
         return new ImportArtistDiscographyResponse("Artist's discography importation has been created", true, false, artistDiscographyImport);
     }
 

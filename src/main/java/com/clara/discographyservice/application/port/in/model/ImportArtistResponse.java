@@ -1,4 +1,4 @@
-package com.clara.discographyservice.application.port.in;
+package com.clara.discographyservice.application.port.in.model;
 
 import com.clara.discographyservice.application.domain.model.artist.responsemodel.ArtistResModel;
 

@@ -31,15 +31,19 @@ public class ReleaseLabelEntity {
 
     private String catno;
 
-    @Column(name = "entity_type")
+    @Column(name = "entity_type", length = 50)
     private String entityType;
 
     @Column(name = "entity_type_name")
     private String entityTypeName;
 
-    @Column(name = "discogs_resource_url")
+    @Column(name = "discogs_resource_url", length = 1024)
     private String discogsResourceUrl;
 
+    /**
+     * Constructor to create a ReleaseLabelEntity with null id,
+     * to use just to create a ReleaseLabelEntity before save in persistence
+     */
     public ReleaseLabelEntity(Long discogsLabelId, String name, String catno,
                               String entityType, String entityTypeName,
                               String discogsResourceUrl) {

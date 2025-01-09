@@ -1,14 +1,14 @@
-package com.clara.discographyservice.application.port.in;
+package com.clara.discographyservice.application.port.in.model;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 import static com.clara.discographyservice.infrastructure.validation.BeanValidation.validate;
 
-public record ArtistImportCommand(
+public record ArtistDiscographyImportCommand(
       @NotNull @Positive Long discogsArtistId) {
 
-    public ArtistImportCommand(Long discogsArtistId ) {
+    public ArtistDiscographyImportCommand(Long discogsArtistId ) {
         this.discogsArtistId = discogsArtistId;
         validate(this);
     }

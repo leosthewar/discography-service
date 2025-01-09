@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -31,5 +32,6 @@ public class ArtistDiscographyImportErrorEntity {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Lob
     private String log;
 }

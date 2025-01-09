@@ -1,4 +1,4 @@
-package com.clara.discographyservice.application.port.in;
+package com.clara.discographyservice.application.port.in.model;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

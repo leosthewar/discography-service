@@ -1,9 +1,9 @@
 package com.clara.discographyservice.application.port.out;
 
-import com.clara.discographyservice.application.port.in.ArtistGetQuery;
-import com.clara.discographyservice.application.port.in.ArtistReleasesGetQuery;
-import com.clara.discographyservice.application.port.in.ArtistSearchQuery;
-import com.clara.discographyservice.application.port.in.ReleaseGetQuery;
+import com.clara.discographyservice.application.port.in.model.ArtistGetQuery;
+import com.clara.discographyservice.application.port.in.model.ArtistReleasesGetQuery;
+import com.clara.discographyservice.application.port.in.model.ArtistSearchQuery;
+import com.clara.discographyservice.application.port.in.model.ReleaseGetQuery;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.annotation.Nonnull;
 

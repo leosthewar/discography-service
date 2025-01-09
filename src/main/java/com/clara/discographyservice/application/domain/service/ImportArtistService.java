@@ -2,11 +2,11 @@ package com.clara.discographyservice.application.domain.service;
 
 import com.clara.discographyservice.application.domain.model.artist.ArtistEntity;
 import com.clara.discographyservice.application.domain.model.artist.ArtistEntityMapper;
-import com.clara.discographyservice.application.port.in.ArtistGetQuery;
-import com.clara.discographyservice.application.port.in.ArtistImportCommand;
 import com.clara.discographyservice.application.port.in.DeserializerDiscogsResponseException;
-import com.clara.discographyservice.application.port.in.ImportArtistResponse;
 import com.clara.discographyservice.application.port.in.ImportArtistUseCase;
+import com.clara.discographyservice.application.port.in.model.ArtistGetQuery;
+import com.clara.discographyservice.application.port.in.model.ArtistImportCommand;
+import com.clara.discographyservice.application.port.in.model.ImportArtistResponse;
 import com.clara.discographyservice.application.port.out.ArtistRepository;
 import com.clara.discographyservice.application.port.out.DiscogsAPIClient;
 import com.fasterxml.jackson.core.JsonProcessingException;

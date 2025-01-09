@@ -23,9 +23,8 @@ interface ArtistDiscographyImportJpaRepository extends JpaRepository<ArtistDisco
            adid.discogsReleaseId AS discogsReleaseId
            FROM ArtistDiscographyImportEntity adi
            JOIN adi.details adid
-           JOIN ArtistEntity ae ON ae.id = adi.artistId
            WHERE adid.imported = false
-           ORDER BY adid.id desc
+           ORDER BY adid.id asc
            """)
     List<ImportDetailsProjection> findNotImportedReleases(Pageable pageable);
 
@@ -40,5 +39,10 @@ interface ArtistDiscographyImportJpaRepository extends JpaRepository<ArtistDisco
     @Transactional
     @Query("UPDATE ArtistDiscographyImportDetailEntity d SET d.imported = true WHERE d.id = :detailId")
     void updateImportDetailToTrue(Long detailId);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE  ArtistDiscographyImportDetailEntity d  WHERE d.id = :detailId")
+    void deleteImportDetail(Long detailId);
 
 }

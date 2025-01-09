@@ -25,6 +25,10 @@ public class ReleaseStyleEntity {
 
     private String name;
 
+    /**
+     * Constructor to create a ReleaseStyleEntity with null id,
+     * to use just to create a ReleaseStyleEntity before save in persistence
+     */
     public ReleaseStyleEntity(String name) {
         this.name = name;
     }

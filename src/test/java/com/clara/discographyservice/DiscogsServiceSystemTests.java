@@ -25,9 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(properties = {
-        "discogs.baseUrl=http://localhost:8080"
-})
+@TestPropertySource(locations = "classpath:application-test.properties")
 class DiscogsServiceSystemTests {
 
     @Autowired

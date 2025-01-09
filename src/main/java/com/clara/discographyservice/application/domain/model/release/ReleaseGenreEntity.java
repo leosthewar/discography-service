@@ -25,6 +25,10 @@ public class ReleaseGenreEntity {
 
     private String name;
 
+    /**
+     * Constructor to create a ReleaseGenreEntity with null id,
+     * to use just to create a ReleaseGenreEntity before save in persistence
+     */
     public ReleaseGenreEntity(String name) {
         this.name = name;
     }

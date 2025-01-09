@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -35,10 +36,10 @@ public class ReleaseEntity {
 
     private Integer year;
 
-    @Column(name = "discogs_resource_url")
+    @Column(name = "discogs_resource_url", length = 1024)
     private String discogsResourceUrl;
 
-    @Column(name = "discogs_uri")
+    @Column(name = "discogs_uri", length = 1024)
     private String discogsUri;
 
     @Column(name = "format_quantity")
@@ -50,9 +51,10 @@ public class ReleaseEntity {
 
     private String released;
 
+    @Lob
     private String notes;
 
-    @Column(name = "discogs_thumb")
+    @Column(name = "discogs_thumb", length = 1024)
     private String discogsThumb;
 
     @Column(name = "estimated_weight")
@@ -61,34 +63,38 @@ public class ReleaseEntity {
     @Column(name = "blocked_from_sale")
     private Boolean blockedFromSale;
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "release_id", nullable = false)
     private List<ReleaseArtistEntity> artists;
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "release_id", nullable = false)
     private List<ReleaseLabelEntity> labels;
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "release_id", nullable = false)
     private List<ReleaseFormatEntity> formats;
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "release_id", nullable = false)
     private List<ReleaseGenreEntity> genres;
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "release_id", nullable = false)
     private List<ReleaseStyleEntity> styles;
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "release_id", nullable = false)
     private List<ReleaseTrackEntity> tracks;
 
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "release_id", nullable = false)
     private List<ReleaseImageEntity> images;
 
+    /**
+     * Constructor to create a ReleaseArtistEntity with null id,
+     * to use just to create a ReleaseArtistEntity before save in persistence
+     */
     public ReleaseEntity(Long discogsId, String status, Integer year,
                          String discogsResourceUrl, String discogsUri,
                          Integer formatQuantity, String title, String country,
@@ -101,6 +107,9 @@ public class ReleaseEntity {
                          List<ReleaseStyleEntity> styles,
                          List<ReleaseTrackEntity> tracks,
                          List<ReleaseImageEntity> images) {
+        if (discogsId == null || title == null || title.isBlank()) {
+            throw new IllegalArgumentException("discogsId and title must not be null or empty");
+        }
         this.discogsId = discogsId;
         this.status = status;
         this.year = year;

@@ -49,6 +49,11 @@ class ArtistDiscographyImportJpaAdapter implements ArtistDiscographyImportReposi
     }
 
     @Override
+    public void deleteImportDetail(Long detailId) {
+        artistDiscographyImportJpaRepository.deleteImportDetail(detailId);
+    }
+
+    @Override
     public Integer countReleasesNotImportedByArtistId(Long importId) {
         return artistDiscographyImportJpaRepository.countReleasesNotImportedByArtistId(importId);
     }

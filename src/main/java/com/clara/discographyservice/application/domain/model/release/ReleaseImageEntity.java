@@ -26,19 +26,23 @@ public class ReleaseImageEntity {
 
     private String type;
 
-    @Column(name = "discogs_uri")
+    @Column(name = "discogs_uri", length = 1024)
     private String discogsUri;
 
-    @Column(name = "discogs_resource_url")
+    @Column(name = "discogs_resource_url",  length = 1024)
     private String discogsResourceUrl;
 
-    @Column(name = "discogs_uri150")
+    @Column(name = "discogs_uri150", length = 1024)
     private String discogsUri150;
 
     private Integer width;
 
     private Integer height;
 
+    /**
+     * Constructor to create a ReleaseImageEntity with null id,
+     * to use just to create a ReleaseImageEntity before save in persistence
+     */
     public ReleaseImageEntity(String type, String discogsUri, String discogsResourceUrl, String discogsUri150, Integer width, Integer height) {
         this.type = type;
         this.discogsUri = discogsUri;

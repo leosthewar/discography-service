@@ -1,6 +1,6 @@
 package com.clara.discographyservice.application.domain.service;
 
-import com.clara.discographyservice.application.port.in.ArtistSearchQuery;
+import com.clara.discographyservice.application.port.in.model.ArtistSearchQuery;
 import com.clara.discographyservice.application.port.out.DiscogsAPIClient;
 import com.clara.discographyservice.application.port.out.DiscogsException;
 import com.fasterxml.jackson.core.JsonProcessingException;

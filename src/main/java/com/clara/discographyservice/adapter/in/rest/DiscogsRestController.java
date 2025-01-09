@@ -1,7 +1,7 @@
 package com.clara.discographyservice.adapter.in.rest;
 
-import com.clara.discographyservice.application.port.in.ArtistSearchQuery;
 import com.clara.discographyservice.application.port.in.SearchArtistFromDiscogsUseCase;
+import com.clara.discographyservice.application.port.in.model.ArtistSearchQuery;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,8 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequestMapping("v1/discogs")
 @ApiResponses(value = {
-        @ApiResponse(responseCode = "500", description = "Unexpected error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))),
-        @ApiResponse(responseCode = "502", description = "Discogs API returns error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))),
+        @ApiResponse(responseCode = "502", description = "Error in the Discogs API", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))),
         @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class)))
 })
 class DiscogsRestController {

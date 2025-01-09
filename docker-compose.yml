@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres-discography
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: discoUser
+      POSTGRES_PASSWORD: discoPass1234
+      POSTGRES_DB: discographyDB
+
+  app:
+    image: leosdev/discography-service:latest
+    container_name: discography-service
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/discographyDB
+      SPRING_DATASOURCE_USERNAME: discoUser
+      SPRING_DATASOURCE_PASSWORD: discoPass1234
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - postgres
+

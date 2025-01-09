@@ -1,7 +1,7 @@
 package com.clara.discographyservice.application.domain.service;
 
-import com.clara.discographyservice.application.port.in.ArtistSearchQuery;
 import com.clara.discographyservice.application.port.in.SearchArtistFromDiscogsUseCase;
+import com.clara.discographyservice.application.port.in.model.ArtistSearchQuery;
 import com.clara.discographyservice.application.port.out.DiscogsAPIClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;

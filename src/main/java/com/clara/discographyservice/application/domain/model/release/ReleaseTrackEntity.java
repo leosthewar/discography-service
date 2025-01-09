@@ -32,6 +32,10 @@ public class ReleaseTrackEntity {
 
     private String duration;
 
+    /**
+     * Constructor to create a ReleaseTrackEntity with null id,
+     * to use just to create a ReleaseTrackEntity before save in persistence
+     */
     public ReleaseTrackEntity(String position, String type, String title, String duration) {
         this.position = position;
         this.type = type;
