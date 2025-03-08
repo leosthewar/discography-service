@@ -1,0 +1,697 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Discography Service API",
+    "description": "Discography Service API",
+    "version": "0.0.1-SNAPSHOT"
+  },
+  "externalDocs": {
+    "description": "Project Documentation"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/v1/artists/import/discogs/{discogsArtistId}": {
+      "post": {
+        "tags": [
+          "artist-rest-controller"
+        ],
+        "summary": "Import artist's data from  Discogs API",
+        "operationId": "importArtist",
+        "parameters": [
+          {
+            "name": "discogsArtistId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "502": {
+            "description": "Error in the Discogs API",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Artist not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Artist imported successfully from Discogs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtistResModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Artist already imported",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtistResModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/artists/discography/import/discogs/{discogsArtistId}": {
+      "post": {
+        "tags": [
+          "artist-discography-rest-controller"
+        ],
+        "summary": "Import an artist from  Discogs API",
+        "operationId": "searchArtist",
+        "parameters": [
+          {
+            "name": "discogsArtistId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "502": {
+            "description": "Error in the Discogs API",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Artist not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Artist's discography created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtistResModel"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Artist's discography already created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtistResModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Error creating importation request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArtistResModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/artists/discography/compare": {
+      "post": {
+        "tags": [
+          "compare-artist-discographies-rest-controller"
+        ],
+        "summary": "Import an artist from  Discogs API",
+        "operationId": "compareArtistDiscographies",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompareArtistDiscographiesRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Artist's discography already created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": [
+                    {
+                      "discogsArtistId": 123,
+                      "numReleases": 207,
+                      "firstReleaseYear": 1971,
+                      "lastReleaseYear": 2023,
+                      "genres": [
+                        "Balls",
+                        "Rock"
+                      ],
+                      "styles": [
+                        "Bachata",
+                        "Vallenato"
+                      ]
+                    },
+                    {
+                      "discogsArtistId": 456,
+                      "numReleases": 207,
+                      "firstReleaseYear": 1971,
+                      "lastReleaseYear": 2023,
+                      "genres": [
+                        "Blues",
+                        "Rock"
+                      ],
+                      "styles": [
+                        "Bachata",
+                        "Merengue"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Error comparing discographies",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/discogs/artists/search": {
+      "get": {
+        "tags": [
+          "discogs-rest-controller"
+        ],
+        "summary": "Search artists using Discogs API",
+        "operationId": "searchArtist_1",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "502": {
+            "description": "Error in the Discogs API",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Search result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "pagination": {
+                      "page": 8,
+                      "pages": 9,
+                      "per_page": 50,
+                      "items": 404,
+                      "urls": {
+                        "first": "http://domain.com/v1/discogs/artists/search?q=Nirvana&page=1&per_page=50",
+                        "last": "http://domain.com/v1/discogs/artists/search?q=Nirvana&page=9&per_page=50",
+                        "prev": "http://domain.com/v1/discogs/artists/search?q=Nirvana&page=7&per_page=50",
+                        "next": "http://domain.com/v1/discogs/artists/search?q=Nirvana&page=9&per_page=50"
+                      }
+                    },
+                    "results": [
+                      {
+                        "id": 125246,
+                        "type": "artist",
+                        "master_id": null,
+                        "master_url": null,
+                        "uri": "/artist/125246-Nirvana",
+                        "title": "Nirvana",
+                        "thumb": "https://i.discogs.com/KydDnAWdAzeHy0dZ4YSnpkuh__uLXIk8w60uKQVW0G4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTEyNTI0/Ni0xNTAxMjg1MjAw/LTMwNTguanBlZw.jpeg",
+                        "cover_image": "https://i.discogs.com/S_HB3FZR5TTcRyjBqlnUQpF_WgF-i9iSqcMTQGdwB6M/rs:fit/g:sm/q:90/h:609/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTEyNTI0/Ni0xNTAxMjg1MjAw/LTMwNTguanBlZw.jpeg",
+                        "resource_url": "https://api.discogs.com/artists/125246"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/artists/discography/{discogsArtistId}": {
+      "get": {
+        "tags": [
+          "artist-discography-rest-controller"
+        ],
+        "summary": "Get artist's discography, supporting pagination and sort by year",
+        "operationId": "findDiscographyByArtistIdSortByYear",
+        "parameters": [
+          {
+            "name": "discogsArtistId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            }
+          },
+          {
+            "name": "sort_order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "asc"
+            }
+          }
+        ],
+        "responses": {
+          "502": {
+            "description": "Error in the Discogs API",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Artist not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Error getting Artist's discography",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Artist's discography",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "A error response"
+      },
+      "ArtistImageResModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "type": {
+            "type": "string"
+          },
+          "discogsUri": {
+            "type": "string"
+          },
+          "discogsResourceUrl": {
+            "type": "string"
+          },
+          "discogsUri150": {
+            "type": "string"
+          },
+          "width": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ArtistMemberResModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "discogsArtistId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "discogsResourceUrl": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "thumbnailUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "ArtistResModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "discogsId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "discogsResourceUrl": {
+            "type": "string"
+          },
+          "discogsUri": {
+            "type": "string"
+          },
+          "discogsReleasesUrl": {
+            "type": "string"
+          },
+          "profile": {
+            "type": "string"
+          },
+          "nameVariations": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dataQuality": {
+            "type": "string"
+          },
+          "urls": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "discographyImported": {
+            "type": "boolean"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArtistImageResModel"
+            }
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArtistMemberResModel"
+            }
+          }
+        }
+      },
+      "CompareArtistDiscographiesRequestDTO": {
+        "type": "object",
+        "properties": {
+          "discogsArtistIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        }
+      },
+      "Page": {
+        "type": "object",
+        "properties": {
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/SortObject"
+          },
+          "pageable": {
+            "$ref": "#/components/schemas/PageableObject"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PageableObject": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/SortObject"
+          },
+          "unpaged": {
+            "type": "boolean"
+          },
+          "paged": {
+            "type": "boolean"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SortObject": {
+        "type": "object",
+        "properties": {
+          "empty": {
+            "type": "boolean"
+          },
+          "unsorted": {
+            "type": "boolean"
+          },
+          "sorted": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
