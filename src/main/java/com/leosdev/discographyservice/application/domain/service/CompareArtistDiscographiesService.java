@@ -3,7 +3,7 @@ package com.leosdev.discographyservice.application.domain.service;
 import com.leosdev.discographyservice.application.domain.model.artist.ArtistDiscographySummary;
 import com.leosdev.discographyservice.application.domain.model.artist.ArtistEntity;
 import com.leosdev.discographyservice.application.domain.model.artist.responsemodel.ArtistDiscographySummaryResModel;
-import com.leosdev.discographyservice.application.port.in.model.CompareArtistDiscographiesUseCase;
+import com.leosdev.discographyservice.application.port.in.CompareArtistDiscographiesUseCase;
 import com.leosdev.discographyservice.application.port.in.model.CompareDiscographiesByDiscogsAristIdCommand;
 import com.leosdev.discographyservice.application.port.in.model.CompareDiscographiesResponse;
 import com.leosdev.discographyservice.application.port.out.ArtistRepository;

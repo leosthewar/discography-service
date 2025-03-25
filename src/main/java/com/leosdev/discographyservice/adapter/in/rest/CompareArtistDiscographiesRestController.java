@@ -1,6 +1,6 @@
 package com.leosdev.discographyservice.adapter.in.rest;
 
-import com.leosdev.discographyservice.application.port.in.model.CompareArtistDiscographiesUseCase;
+import com.leosdev.discographyservice.application.port.in.CompareArtistDiscographiesUseCase;
 import com.leosdev.discographyservice.application.port.in.model.CompareDiscographiesByDiscogsAristIdCommand;
 import com.leosdev.discographyservice.application.port.in.model.CompareDiscographiesResponse;
 import io.swagger.v3.oas.annotations.Operation;
